@@ -36,7 +36,7 @@
 
                         <hr>
 
-                        <a href="{% url 'blogapp:post_detail' post.id %}" class="readmore stretched-link"><span>Read More</span><i
+                        <a href="{{post.get_absolute_url}}" class="readmore stretched-link"><span>Read More</span><i
                                 class="bi bi-arrow-right"></i></a>
 
                     </div>
