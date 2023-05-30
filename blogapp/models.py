@@ -17,7 +17,7 @@ class Post(models.Model):
         PUBLISHED = 'PB', 'Published'
     
     title=models.CharField(max_length=250)
-    slug = models.CharField(max_length=250)
+    slug = models.CharField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
@@ -28,9 +28,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
-    def get_absolute_url(self):
-        return reverse('blogapp:post_detail', args=['self.id'])
-
     objects = models.Manager()
     published = PublishedManager()
     
@@ -38,3 +35,5 @@ class Post(models.Model):
         ordering = ['-publish']
         indexes = [models.Index(fields = ['-publish']),]
     
+    def get_absolute_url(self):
+        return reverse('blogapp:post_detail', args=[self.slug])
