@@ -1,0 +1,65 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %} Share a Post {% endblock %}
+{% block content %}
+
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-5">
+
+            <div class="col-lg-8">
+                <div class="comments">
+
+
+                    <div class="reply-form">
+
+                        <h4>Leave a Reply</h4>
+                        <p>Your email address will not be published. Required fields are marked * </p>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    {{form.name}}
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    {{form.email}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="d-flex justify-content-evenly form-group">
+                                    {{form.year}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col  form-group">
+                                    {{form.comments}}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+
+                        </form>
+
+                    </div>
+
+                </div><!-- End blog comments -->
+
+            </div>
+
+            <div class="col-lg-4">
+
+
+
+            </div>
+        </div>
+
+    </div>
+</section><!-- End Blog Details Section -->
+
+
+
+
+
+{% endblock %}
