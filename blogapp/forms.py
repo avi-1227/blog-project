@@ -17,9 +17,16 @@ class EmailPostForm(forms.Form):
         required=False,
         widget=forms.Textarea(
             attrs={"class": "form-control", "placeholder": "Your Comments*"}
-        )
+        ),
     )
 
     year = forms.DateField(
         widget=forms.SelectDateWidget(attrs={"class": "form-select"})
     )
+
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Search"}
+            )
+       )
