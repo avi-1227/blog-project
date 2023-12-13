@@ -5,6 +5,9 @@ from django.utils import timezone
 # Adding a many-to-one relationship
 from django.contrib.auth.models import User
 
+from django.urls import reverse
+
+
 # Create your models here.
 class Post(models.Model):
     class Status(models.TextChoices):
@@ -26,3 +29,8 @@ class Post(models.Model):
         indexes = [models.Index(fields=['-publish']),]
     def __str__(self):
         return self.title
+    
+
+    # Using canonical URLs for models get_absolute_url()
+    def get_absolute_url(self):
+        return reverse('blogapp:post_detail', args=[self.id])
