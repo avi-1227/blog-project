@@ -832,3 +832,25 @@ figure {
 		min-height: 34px;
 	}
 }
+
+.list-group-item {
+	border: none;
+	border-radius: 0;
+	background-color: #f5f5f5;
+}
+
+.list-group-item img {
+	width: 40px;
+	height: 40px;
+}
+
+.list-group-item .d-flex {
+	align-items: center;
+}
+
+@media (max-width: 768px) {
+	.list-group-item img {
+		width: 30px;
+		height: 30px;
+	}
+}

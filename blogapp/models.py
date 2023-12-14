@@ -34,3 +34,24 @@ class Post(models.Model):
     # Using canonical URLs for models get_absolute_url()
     def get_absolute_url(self):
         return reverse('blogapp:post_detail', args=[self.id])
+
+# Creating a model for comments
+class Comment(models.Model):
+    class Gender(models.TextChoices):
+        MALE = 'M', 'Male'
+        FEMALE = 'F', 'Female'
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=90)
+    email = models.EmailField()
+    body = models.TextField()
+    gender = models.CharField(max_length=2, choices=Gender.choices, default=Gender.MALE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering=['created']
+        indexes = models.Index(fields=['created']),
+    
+    def __str__(self):
+        return f'Comments by {self.name} on {self.post}'

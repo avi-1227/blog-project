@@ -1,4 +1,6 @@
 {% extends 'blogapp/base.html' %}
+{% load static %}
+{% block title %}{{ post.title }}{% endblock %}
 {% block content %}
 
 <main class="col-md-8">
@@ -13,7 +15,11 @@
 
                 <span class="post-author"><a href="#">{{post.author}}</a></span>
 
-                <span class="comments-link"><a href="#">4 Comments</a></span>
+                <span class="comments-link"><a href="#">
+                        {% with comments.count as total_comments %}
+                        {{ total_comments }} Comment{{ total_comments|pluralize }}
+                        {% endwith %}
+                    </a></span>
             </div>
         </header>
         <div class="entry-content clearfix text-justify">
@@ -21,7 +27,47 @@
 
         </div>
     </article>
+
+    {% with comments.count as total_comments %}
+    <h3>{{ total_comments }} comment{{ total_comments|pluralize }}</h3>
+    {% endwith %}
+
+    {% for comment in comments %}
+    <section id="comments" class="mt-5">
+        <div class="list-group">
+
+            <div class="list-group-item list-group-item-action flex-nowrap">
+                {% if comment.gender == 'Female' %}
+                <img src="{% static 'img/male.png'%}" width="60" height="60" class="rounded-circle mr-3" alt="Avatar" />
+                {% else %}
+                <img src="{% static 'img/female.jpg' %}" width="60" height="60" class="rounded-circle mr-3"
+                    alt="Avatar" />
+                {% endif %}
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <span class="font-weight-bold">{{ comment.name }}</span>
+                        <small class="text-muted">{{ comment.created }}</small>
+                    </div>
+                    <!-- <a href="#" class="text-muted"><i class="fas fa-reply"></i> Reply</a> -->
+                </div>
+                <p class="mb-0">{{ comment.body|linebreaks }}</p>
+
+
+            </div>
+
+        </div>
+    </section>
+    {% empty %}
+    <p>There are no comments.</p>
+    {% endfor %}
+
+    <div class="mt-4">
+        {% include "blogapp/post/includes/comment_form.html" %}
+    </div>
+
 </main>
+
+
 {%endblock%}
 
 {% block sidenav %}
