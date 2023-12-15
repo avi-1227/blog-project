@@ -7,16 +7,18 @@ from django.views.decorators.http import require_POST
 
 def post_list(request):
     posts = Post.objects.filter(status=Post.Status.PUBLISHED)
-    return render(request, 'blogapp/post/list.html',{'posts':posts})
+    recent_posts = Post.objects.order_by('-publish')[:5]
+    return render(request, 'blogapp/post/list.html',{'posts':posts, 'recent_posts':recent_posts})
 
 
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED)
+    recent_posts = Post.objects.order_by('-publish')[:5]
     # List of active comments for this post
     comments = post.comments.filter(active=True)
     # Form for users to comment
     form = CommentForm()
-    return render(request, 'blogapp/post/detail.html',{'post':post ,'comments': comments, 'form': form})
+    return render(request, 'blogapp/post/detail.html',{'post':post ,'comments': comments, 'form': form, 'recent_posts':recent_posts})
 
 def about(request):
     return render(request, 'blogapp/post/about.html')
@@ -36,3 +38,5 @@ def post_comment(request, post_id):
         comment.post=post
         comment.save()
     return render(request, 'blogapp/post/comment.html', {'post': post, 'form': form, 'comment': comment})
+
+
