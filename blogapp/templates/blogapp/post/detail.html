@@ -37,6 +37,7 @@
                         <form class="mb-4" method="post">
                             {% csrf_token %}
                             {{form.as_p}}
+                            <button type="submit">Post Comment</button>
                         </form>
                         <!-- Comment with nested comments-->
                         <div class="d-flex mb-4">
